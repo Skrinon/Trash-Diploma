@@ -17,45 +17,46 @@ double calculateStdDev(const std::vector<double>& values, double mean) {
     return std::sqrt(sum / (values.size() - 1));
 }
 
-// Updated main function to handle comma-separated values
+// Обновлена основная функция для обработки значений, разделенных запятыми.
 int main() {
+    std::locale::global(std::locale(""));
     std::string filename;
-    std::cout << "Enter the filename: ";
+    std::cout << "Введите имя файла: ";
     std::cin >> filename;
 
     std::ifstream inputFile(filename);
     if (!inputFile.is_open()) {
-        std::cerr << "Failed to open file: " << filename << std::endl;
+        std::cerr << "Не удалось открыть файл: " << filename << std::endl;
         return 1;
     }
 
     std::vector<double> data;
     std::string line;
-    // Assuming all numbers are on a single line, separated by commas
+    // Предполагая, что все числа находятся в одной строке и разделены запятыми.
     if (getline(inputFile, line)) {
         std::stringstream ss(line);
         double temp;
         while (ss >> temp) {
             data.push_back(temp);
             if (ss.peek() == ',') {
-                ss.ignore(); // Ignore the comma
+                ss.ignore(); // Игнорирование запятой
             }
-            std::cout << temp << std::endl; // Display the number
+            std::cout << temp << std::endl; // Отображаем номер
         }
     }
 
     inputFile.close();
 
     if (data.empty()) {
-        std::cerr << "The file is empty or contains non-numeric data." << std::endl;
+        std::cerr << "Файл пуст или содержит нечисловые данные." << std::endl;
         return 1;
     }
 
     double mean = calculateMean(data);
     double stdDev = calculateStdDev(data, mean);
 
-    std::cout << "\nMean Value: " << mean << std::endl;
-    std::cout << "Standard Deviation: " << stdDev << std::endl;
+    std::cout << "\nСреднее значение: " << mean << std::endl;
+    std::cout << "Среднеквадратичное отклонение: " << stdDev << std::endl;
 
     return 0;
 }
