@@ -1,10 +1,9 @@
-﻿#include <iostream>
+#include <iostream>
 #include <fstream>
 #include <vector>
 #include <cmath>
 #include <numeric>
 #include <sstream>
-#include <string>
 
 double calculateMean(const std::vector<double>& values) {
     return std::accumulate(values.begin(), values.end(), 0.0) / values.size();
@@ -18,6 +17,7 @@ double calculateStdDev(const std::vector<double>& values, double mean) {
     return std::sqrt(sum / (values.size() - 1));
 }
 
+// Обновлена основная функция для обработки значений, разделенных запятыми.
 int main() {
     std::locale::global(std::locale(""));
     std::string filename;
@@ -32,12 +32,16 @@ int main() {
 
     std::vector<double> data;
     std::string line;
+    // Предполагая, что все числа находятся в одной строке и разделены запятыми.
     if (getline(inputFile, line)) {
         std::stringstream ss(line);
-        std::string value;
-        while (getline(ss, value, ',')) { // Используем getline для разделения по запятой
-            data.push_back(std::stod(value)); // Преобразуем строку в число
-            std::cout << std::stod(value) << std::endl; // Отображаем число
+        double temp;
+        while (ss >> temp) {
+            data.push_back(temp);
+            if (ss.peek() == ',') {
+                ss.ignore(); // Игнорирование запятой
+            }
+            std::cout << temp << std::endl; // Отображаем номер
         }
     }
 
