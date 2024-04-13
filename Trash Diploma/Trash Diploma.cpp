@@ -74,17 +74,17 @@ double calculateTypeBUncertainty(double a_minus, double a_plus, char distributio
     double x;
 
     switch (distributionType) {
-    case 'U':
+    case 'U': // равномерное распределение 
         u_B = (a_plus - a_minus) / std::sqrt(12);
         break;
-    case 'T':
+    case 'T': // Трикутное распределение
         u_B = (a_plus - a_minus) / std::sqrt(24);
         break;
-    case 'R':
+    case 'R': // Трапециевидальное распределение
         beta = 0.5;
         u_B = (a_plus - a_minus) / (std::sqrt(24) * std::sqrt(1 + beta * beta));
         break;
-    case 'E':
+    case 'E': // Экспоненциальное распределение
         lambda = 1.0;
         x = (a_plus + a_minus) / 2;
         u_B = std::sqrt(((a_plus - x) * (x - a_minus) - ((a_plus - 2 * x + a_minus) / lambda)));
